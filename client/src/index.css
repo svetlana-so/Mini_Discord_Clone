@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.login {
+  background-color: #282b30;
+}
+
+input {
+  background-color: #282b30;
+}
+
+.login-btn, .logout-btn {
+  background-color: #7289da;
+}
+
+.messages {
+  background-color: #36393e;
+}
+.channels, .user-bar {
+  background-color: #282b30;
+  color: #ccced2;
+}
+.side-bar{
+  background-color: #1e2124;
+}
