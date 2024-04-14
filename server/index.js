@@ -1,11 +1,11 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import {} from "dotenv/config";
 
 import { generateRandomId } from "./utils/utils.js";
 import { initializeStore } from "./utils/sessions.js";
 import { initializeChannel } from "./utils/channels.js";
-import { buildMessage } from "./utils/messages.js";
 
 const app = express();
 const server = createServer(app);
@@ -54,6 +54,7 @@ io.use(async (socket, next) => {
 });
 
 io.on("connection", (socket) => {
+  console.log("connected", socket.username);
   const currentSession = {
     sessionId: socket.sessionId,
     userId: socket.userId,
@@ -92,6 +93,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    console.log("disconnected", socket.connected);
     const session = sessions.getSessionById(socket.sessionId);
 
     if (!session) return;
@@ -107,7 +109,6 @@ io.on("connection", (socket) => {
       connected: false,
     });
   });
-  console.log("disconnected");
 });
 
 server.listen(port, () => {

@@ -4,7 +4,7 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 export default function UserBar({ users }) {
   return (
     <div className=" text-gray-100 p-2">
-      <h4 className="mx-4 font-bold"> USERS</h4>
+      <h4 className="mx-4 font-bold text-sm truncate">ONLINE USERS</h4>
       <div
         className=" overflow-y-auto"
         style={{ maxHeight: "calc(100vh - 40px)" }}

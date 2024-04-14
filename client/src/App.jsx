@@ -3,8 +3,8 @@ import { socket } from "./lib/socket";
 import UserBar from "./components/UserBar";
 import Channels from "./components/Channels";
 import Messages from "./components/Messages";
-import { Avatar, AvatarImage } from "./components/ui/avatar";
 import Chat from "./components/Chat";
+import SideBar from "./components/SideBar";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -31,16 +31,21 @@ function App() {
 
     socket.on("channels", (channelsData) => {
       setChannels(channelsData);
+
       const initialMessages = {};
+
       channelsData.forEach((channel) => {
         initialMessages[channel.name] = [];
       });
 
       setChannelMessages(initialMessages);
+
       const initialNewMessages = {};
+
       channelsData.forEach((channel) => {
         initialNewMessages[channel.name] = false;
       });
+
       setNewMessages(initialNewMessages);
     });
 
@@ -50,12 +55,21 @@ function App() {
       );
     });
 
+    socket.on("user:disconnect", (userData) => {
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.userId === userData.userId ? { ...user, connected: false } : user
+        )
+      );
+    });
+
     return () => {
       socket.off("session");
       socket.off("channels");
       socket.off("users");
       socket.off("user:join");
       socket.off("user:leave");
+      socket.off("user:disconnect");
     };
   }, [session]);
 
@@ -68,10 +82,16 @@ function App() {
     }
   };
 
-  const handleLogout = () => {
-    socket.emit("logout");
+  const leaveTheServer = () => {
+    socket.emit("user:leave");
     setIsLoggedIn(false);
     setUsername("");
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUsername("");
+    socket.disconnect();
   };
 
   const handleChannelClick = (channelName) => {
@@ -141,6 +161,7 @@ function App() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+
           <button
             className="text-gray-200 font-semibold mx-8 login-btn px-4 py-2 rounded-lg"
             type="submit"
@@ -150,22 +171,7 @@ function App() {
         </form>
       ) : (
         <div className="flex flex-row w-full h-full">
-          <div className="flex flex-col  items-center justify-between p-4 gap-2 w-20 side-bar">
-            <Avatar size="md" className="">
-              {
-                <AvatarImage
-                  src="./src/assests/discord-white-icon.png"
-                  alt="discord icon"
-                />
-              }
-            </Avatar>
-            <button
-              className="p-2 rounded-md logout-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
+          <SideBar leaveTheServer={leaveTheServer} logout={logout} />
           <div className=" w-48 channels">
             <Channels
               channels={channels}
