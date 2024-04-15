@@ -19,9 +19,8 @@ function App() {
   const [newMessages, setNewMessages] = useState({});
 
   useEffect(() => {
-    socket.on("session", (sessionData) => {
+    function onSession(sessionData) {
       setSession(sessionData);
-
       const welcomeMessageData = {
         author: "Bot",
         message: `${sessionData.username} has joined the server! Welcome!`,
@@ -29,17 +28,17 @@ function App() {
         time: new Date().toLocaleTimeString(),
       };
       socket.emit("message:channel:send", "welcome", welcomeMessageData);
-    });
+    }
 
-    socket.on("users", (userData) => {
+    function onUsers(userData) {
       setUsers(userData);
-    });
+    }
 
-    socket.on("user:join", (userData) => {
+    function onUserJoin(userData) {
       setUsers((prevUsers) => [...prevUsers, userData]);
-    });
+    }
 
-    socket.on("channels", (channelsData) => {
+    function onChannels(channelsData) {
       setChannels(channelsData);
 
       const initialMessages = {};
@@ -52,21 +51,28 @@ function App() {
 
       setChannelMessages(initialMessages);
       setNewMessages(initialNewMessages);
-    });
+    }
 
-    socket.on("user:leave", (userData) => {
+    function onUserLeave(userData) {
       setUsers((prevUsers) =>
         prevUsers.filter((user) => user.userId !== userData.userId)
       );
-    });
+    }
 
-    socket.on("user:disconnect", (userData) => {
+    function onUserDisconnect(userData) {
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.userId === userData.userId ? { ...user, connected: false } : user
         )
       );
-    });
+    }
+
+    socket.on("session", onSession);
+    socket.on("users", onUsers);
+    socket.on("user:join", onUserJoin);
+    socket.on("channels", onChannels);
+    socket.on("user:leave", onUserLeave);
+    socket.on("user:disconnect", onUserDisconnect);
 
     return () => {
       socket.off("session");
@@ -77,6 +83,7 @@ function App() {
       socket.off("user:disconnect");
     };
   }, [session, users]);
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
