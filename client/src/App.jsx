@@ -5,6 +5,7 @@ import Channels from "./components/Channels";
 import Messages from "./components/Messages";
 import Chat from "./components/Chat";
 import SideBar from "./components/SideBar";
+import UserBadge from "./components/UserBadge";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -20,7 +21,16 @@ function App() {
   useEffect(() => {
     socket.on("session", (sessionData) => {
       setSession(sessionData);
+
+      const welcomeMessageData = {
+        author: "Bot",
+        message: `${sessionData.username} has joined the server! Welcome!`,
+        chosenChannel: "welcome",
+        time: new Date().toLocaleTimeString(),
+      };
+      socket.emit("message:channel:send", "welcome", welcomeMessageData);
     });
+
     socket.on("users", (userData) => {
       setUsers(userData);
     });
@@ -33,19 +43,14 @@ function App() {
       setChannels(channelsData);
 
       const initialMessages = {};
-
-      channelsData.forEach((channel) => {
-        initialMessages[channel.name] = [];
-      });
-
-      setChannelMessages(initialMessages);
-
       const initialNewMessages = {};
 
       channelsData.forEach((channel) => {
+        initialMessages[channel.name] = [];
         initialNewMessages[channel.name] = false;
       });
 
+      setChannelMessages(initialMessages);
       setNewMessages(initialNewMessages);
     });
 
@@ -71,7 +76,7 @@ function App() {
       socket.off("user:leave");
       socket.off("user:disconnect");
     };
-  }, [session]);
+  }, [session, users]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -110,10 +115,7 @@ function App() {
         author: username,
         message,
         chosenChannel,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: new Date().toLocaleTimeString(),
       };
       setChannelMessages((prevState) => ({
         ...prevState,
@@ -172,7 +174,7 @@ function App() {
       ) : (
         <div className="flex flex-row w-full h-full">
           <SideBar leaveTheServer={leaveTheServer} logout={logout} />
-          <div className=" w-48 channels">
+          <div className=" w-48 channels flex flex-col justify-between">
             <Channels
               channels={channels}
               onChannelClick={handleChannelClick}
@@ -181,6 +183,7 @@ function App() {
               chosenChannel={chosenChannel}
               setChosenChannel={setChosenChannel}
             />
+            <UserBadge username={username}></UserBadge>
           </div>
           <div className="flex-1 messages flex flex-col justify-end">
             <Chat messages={channelMessages[chosenChannel]} />
