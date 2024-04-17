@@ -13,13 +13,13 @@ export default function SideBar({leaveTheServer, logout}) {
               }
             </Avatar>
             <div className="flex flex-col gap-2"> <button
-              className="p-2 rounded-md w-16 logout-btn"
+              className="p-2 rounded-md w-16 text-xs font-semibold logout-btn"
               onClick={logout}
             >
               Logout
             </button>
             <button
-              className="p-2 rounded-md w-16 bg-red-500"
+              className="p-2 rounded-md w-16 text-xs font-semibold bg-red-500"
               onClick={leaveTheServer}
             >
               Leave server

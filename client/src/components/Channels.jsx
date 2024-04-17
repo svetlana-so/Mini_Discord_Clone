@@ -30,7 +30,7 @@ export default function Channels({
 
   return (
     <div className="channels font-semibold text-sm p-4">
-      <ul className="my-4 flex flex-col gap-4">
+      <ul className="my-4 flex flex-col gap-2">
         {channels.map((channel, index) => (
           <li
             key={channel.name}

@@ -21,9 +21,10 @@ function App() {
   useEffect(() => {
     function onSession(sessionData) {
       setSession(sessionData);
+
       const welcomeMessageData = {
         author: "Bot",
-        message: `${sessionData.username} has joined the server! Welcome!`,
+        message: `${sessionData.username} has joined the server! 🎉 Welcome!`,
         chosenChannel: "welcome",
         time: new Date().toLocaleTimeString(),
       };
@@ -75,15 +76,14 @@ function App() {
     socket.on("user:disconnect", onUserDisconnect);
 
     return () => {
-      socket.off("session");
-      socket.off("channels");
-      socket.off("users");
-      socket.off("user:join");
-      socket.off("user:leave");
-      socket.off("user:disconnect");
+      socket.off("session", onSession);
+      socket.off("users", onUsers);
+      socket.off("channels", onChannels);
+      socket.off("user:join", onUserJoin);
+      socket.off("user:leave", onUserLeave);
+      socket.off("user:disconnect", onUserDisconnect);
     };
   }, [session, users]);
-  
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -198,6 +198,7 @@ function App() {
               handleSubmit={sendTheMessage}
               message={message}
               handleMessageChange={handleMessageChange}
+              chosenChannel={chosenChannel}
             />
           </div>
           <div className=" w-48 user-bar">

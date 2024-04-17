@@ -6,12 +6,13 @@ export default function Messages({
   handleSubmit,
   message,
   handleMessageChange,
+  chosenChannel
 }) {
   return (
-    <div className="w-full text-gray-100 p-2 flex flex-row">
+    <div className="w-full my-6 text-gray-100 p-2 flex flex-row">
       <form onSubmit={handleSubmit} className="w-full flex">
         <Input
-          placeholder="Message"
+          placeholder={`Messages #${chosenChannel}`}
           value={message}
           onChange={handleMessageChange}
         />
