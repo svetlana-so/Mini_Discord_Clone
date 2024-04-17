@@ -6,6 +6,7 @@ import Messages from "./components/Messages";
 import Chat from "./components/Chat";
 import SideBar from "./components/SideBar";
 import UserBadge from "./components/UserBadge";
+import Login from "./components/Login";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -20,7 +21,6 @@ function App() {
 
   useEffect(() => {
     function onSession(sessionData) {
-      console.log(sessionData)
       setSession(sessionData);
 
       const welcomeMessageData = {
@@ -86,6 +86,28 @@ function App() {
     };
   }, [session, users]);
 
+  useEffect(() => {
+    socket.on("message:channel", (messageData) => {
+      if (messageData.author !== username) {
+        setChannelMessages((prevState) => ({
+          ...prevState,
+          [messageData.chosenChannel]: [
+            ...(prevState[messageData.chosenChannel] || []),
+            messageData,
+          ],
+        }));
+        setNewMessages((prevState) => ({
+          ...prevState,
+          [messageData.chosenChannel]: true,
+        }));
+      }
+    });
+
+    return () => {
+      socket.off("message:channel");
+    };
+  }, [channelMessages, username]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (username.trim() !== "") {
@@ -136,50 +158,14 @@ function App() {
     setMessage("");
   };
 
-  useEffect(() => {
-    socket.on("message:channel", (messageData) => {
-      if (messageData.author !== username) {
-        setChannelMessages((prevState) => ({
-          ...prevState,
-          [messageData.chosenChannel]: [
-            ...(prevState[messageData.chosenChannel] || []),
-            messageData,
-          ],
-        }));
-        setNewMessages((prevState) => ({
-          ...prevState,
-          [messageData.chosenChannel]: true,
-        }));
-      }
-    });
-
-    return () => {
-      socket.off("message:channel");
-    };
-  }, [channelMessages, username]);
-
   return (
     <div className="w-full h-screen bg">
       {!isLoggedIn ? (
-        <form
-          onSubmit={handleLogin}
-          className="h-full flex justify-center items-center login"
-        >
-          <input
-            className="text-gray-200 border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent"
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-
-          <button
-            className="text-gray-200 font-semibold mx-8 login-btn px-4 py-2 rounded-lg"
-            type="submit"
-          >
-            Login
-          </button>
-        </form>
+        <Login
+          handleLogin={handleLogin}
+          username={username}
+          setUsername={setUsername}
+        />
       ) : (
         <div className="flex flex-row w-full h-full">
           <SideBar leaveTheServer={leaveTheServer} logout={logout} />
