@@ -3,7 +3,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import {} from "dotenv/config";
 
-import { generateRandomId } from "./utils/utils.js";
+import { generateRandomId, generateRandomNumber } from "./utils/utils.js";
 import { initializeStore } from "./utils/sessions.js";
 import { initializeChannel } from "./utils/channels.js";
 
@@ -38,6 +38,7 @@ io.use(async (socket, next) => {
       socket.sessionId = sessionId;
       socket.userId = session.userId;
       socket.username = session.username;
+      socket.avatar = session.avatar;
 
       next();
     }
@@ -49,6 +50,7 @@ io.use(async (socket, next) => {
   socket.sessionId = generateRandomId();
   socket.userId = generateRandomId();
   socket.username = username;
+  socket.avatar = generateRandomNumber();
 
   next();
 });
@@ -60,6 +62,7 @@ io.on("connection", (socket) => {
     userId: socket.userId,
     username: socket.username,
     connected: true,
+    avatar: socket.avatar,
   };
 
   sessions.setSession(socket.sessionId, currentSession);
@@ -72,6 +75,7 @@ io.on("connection", (socket) => {
     userId: currentSession.userId,
     username: currentSession.username,
     connected: true,
+    avatar: currentSession.avatar,
   });
 
   socket.emit("channels", channels);

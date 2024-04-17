@@ -20,6 +20,7 @@ function App() {
 
   useEffect(() => {
     function onSession(sessionData) {
+      console.log(sessionData)
       setSession(sessionData);
 
       const welcomeMessageData = {
@@ -123,6 +124,7 @@ function App() {
         message,
         chosenChannel,
         time: new Date().toLocaleTimeString(),
+        avatar: session.avatar,
       };
       setChannelMessages((prevState) => ({
         ...prevState,

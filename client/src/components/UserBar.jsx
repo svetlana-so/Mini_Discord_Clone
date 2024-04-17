@@ -1,6 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Avatar, AvatarImage } from "./ui/avatar";
 
+const avatars = [
+  "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-color-icon.png",
+  "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-line-black-icon.png",
+  "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-line-color-icon.png",
+  "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png",
+  "https://banner2.cleanpng.com/20180910/wsc/kisspng-discord-portable-network-graphics-computer-icons-c-welcome-to-hytekgames-5b96b7bf148eb3.7851950615366040950842.jpg",
+];
+
 export default function UserBar({ users }) {
   return (
     <div className=" text-gray-100 p-2 my-4">
@@ -17,10 +25,7 @@ export default function UserBar({ users }) {
             }`}
           >
             <Avatar size="md" className="m-2">
-              <AvatarImage
-                src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png"
-                alt={user.username}
-              />
+              <AvatarImage src={avatars[user.avatar - 1]} alt={user.username} />
             </Avatar>
 
             <p>{user.username}</p>

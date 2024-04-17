@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 /* eslint-disable react/prop-types */
 export default function Chat({ messages }) {
-  //here i had to use useRef hook to prevent unnecessary rerenders
+  //here I had to use useRef hook to prevent unnecessary rerenders
   const messagesEndRef = useRef(null);
 
   useEffect(() => {

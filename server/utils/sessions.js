@@ -25,6 +25,7 @@ export const initializeStore = () => {
         userId: session.userId,
         username: session.username,
         connected: session.connected,
+        avatar: session.avatar,
       };
     });
   }
