@@ -28,7 +28,7 @@ export default function UserBar({ users }) {
               <AvatarImage src={avatars[user.avatar - 1]} alt={user.username} />
             </Avatar>
 
-            <p>{user.username}</p>
+            <p className="flex overflow-hidden text-sm">{user.username}</p>
           </div>
         ))}
       </div>

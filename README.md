@@ -32,6 +32,12 @@ Install dependencies:
 npm install
 ```
 
+```bash
+cd server
+```
+
+Provide .env file with the port information like so PORT=8000
+
 Start the server:
 
 ```bash

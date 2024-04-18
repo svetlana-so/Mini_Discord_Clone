@@ -3,7 +3,7 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 
 export default function SideBar({leaveTheServer, logout}) {
   return (
-    <div className="flex flex-col items-center justify-between p-8 gap-2 w-20 side-bar">
+    <div className="flex flex-col items-center justify-between p-8 gap-2 lg:w-20 w-1/4 side-bar">
             <Avatar size="md" className="">
               {
                 <AvatarImage

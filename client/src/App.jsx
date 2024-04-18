@@ -139,7 +139,7 @@ function App() {
 
   const sendTheMessage = (e) => {
     e.preventDefault();
-    if (message !== "") {
+    if (message.trim() !== "") {
       const messageData = {
         session,
         author: username,
