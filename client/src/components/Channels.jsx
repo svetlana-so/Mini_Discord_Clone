@@ -9,7 +9,6 @@ export default function Channels({
   chosenChannel,
   setChosenChannel,
 }) {
-  
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleClick = (channelName, index) => {

@@ -10,18 +10,19 @@ input {
   background-color: #282b30;
 }
 
-.login-btn, .logout-btn {
+.login-btn,
+.logout-btn {
   background-color: #7289da;
 }
 
 .messages {
   background-color: #36393e;
 }
-.channels, .user-bar {
+.channels,
+.user-bar {
   background-color: #282b30;
   color: #ccced2;
 }
-.side-bar{
+.side-bar {
   background-color: #1e2124;
 }
-

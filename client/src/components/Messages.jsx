@@ -6,7 +6,7 @@ export default function Messages({
   handleSubmit,
   message,
   handleMessageChange,
-  chosenChannel
+  chosenChannel,
 }) {
   return (
     <div className="w-full my-6 text-gray-100 p-2 flex flex-row">

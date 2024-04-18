@@ -20,9 +20,7 @@ export default function UserBar({ users }) {
         {users.map((user) => (
           <div
             key={user.userId}
-            className={`flex items-center ${
-              user.connected ? "text-green-500" : "text-red-500"
-            }`}
+            className={`flex items-center ${user.connected ? "text-green-500" : "text-red-500"}`}
           >
             <Avatar size="md" className="m-2">
               <AvatarImage src={avatars[user.avatar - 1]} alt={user.username} />
