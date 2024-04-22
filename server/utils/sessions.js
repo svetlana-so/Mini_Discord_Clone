@@ -20,14 +20,16 @@ export const initializeStore = () => {
   }
 
   function getAllUsers() {
-    return getAllSessions().map((session) => {
-      return {
-        userId: session.userId,
-        username: session.username,
-        connected: session.connected,
-        avatar: session.avatar,
-      };
-    });
+    return getAllSessions()
+      .map((session) => {
+        return {
+          userId: session.userId,
+          username: session.username,
+          connected: session.connected,
+          avatar: session.avatar,
+        };
+      })
+      .reverse();
   }
 
   function setSession(sessionId, session) {

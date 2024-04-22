@@ -36,7 +36,11 @@ npm install
 cd server
 ```
 
-Provide .env file with the port information like so PORT=8000
+Provide .env file with the port information like so:
+
+```bash
+PORT=8000
+```
 
 Start the server:
 
@@ -56,7 +60,6 @@ Visit http://localhost:5173 in your browser to view the application.
 
 ## Future Development
 
-- Responsive Design: Enhance the application's layout and styling to ensure optimal viewing and interaction experience across various devices and screen sizes.
 - Private Messaging: Implement functionality for users to send private messages to each other.
 - Message Editing and Deletion: Allow users to edit and delete their own messages.
 - User Profiles: Create user profiles with additional information and customization options.
@@ -64,3 +67,7 @@ Visit http://localhost:5173 in your browser to view the application.
 - File Sharing: Allow users to share files, such as images and documents, within channels.
 - Accessibility Improvements: Ensure that the application is accessible to users with disabilities by implementing accessibility features and following best practices.
 - Performance Optimization: Optimize the application's performance to improve loading times and responsiveness.
+- Allowing user to log back in, or show messages that already exist on the channel upon logging in.
+- Slim down custom UI components.
+- Extract some logic into chat component which would only be mounted upon logging in to the app.
+- Welcome message should be sent by the server instead of the user.

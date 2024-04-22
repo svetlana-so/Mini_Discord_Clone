@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 /* eslint-disable react/prop-types */
 export default function Chat({ messages }) {
@@ -10,7 +10,7 @@ export default function Chat({ messages }) {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   if (!messages) {
@@ -19,10 +19,7 @@ export default function Chat({ messages }) {
 
   return (
     <div className="chat-container">
-      <div
-        className="overflow-y-auto"
-        style={{ maxHeight: "calc(100vh - 100px)" }}
-      >
+      <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 100px)' }}>
         {messages.map((message, index) => (
           <div key={index} className="m-4 text-lg">
             <div className="msg-information flex flex-row gap-4 justify-start items-baseline">

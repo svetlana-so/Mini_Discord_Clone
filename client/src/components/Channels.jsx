@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function Channels({
   channels,
@@ -7,7 +7,7 @@ export default function Channels({
   newMessages,
   setNewMessages,
   chosenChannel,
-  setChosenChannel,
+  setChosenChannel
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -15,13 +15,13 @@ export default function Channels({
     setSelectedIndex(index);
     setNewMessages((prevState) => ({
       ...prevState,
-      [channelName]: false,
+      [channelName]: false
     }));
 
     if (chosenChannel !== channelName) {
       setNewMessages((prevState) => ({
         ...prevState,
-        [chosenChannel]: false,
+        [chosenChannel]: false
       }));
       onChannelClick(channelName);
       setChosenChannel(channelName);
@@ -34,13 +34,10 @@ export default function Channels({
         {channels.map((channel, index) => (
           <li
             key={channel.name}
-            className={`${
-              selectedIndex === index
-                ? "font-semibold text-yellow-300"
-                : "font-normal"
+            className={`cursor-pointer ${
+              selectedIndex === index ? 'font-semibold text-yellow-300' : 'font-normal'
             }`}
-            onClick={() => handleClick(channel.name, index)}
-          >
+            onClick={() => handleClick(channel.name, index)}>
             #{channel.name.toUpperCase()}
             {newMessages[channel.name] && chosenChannel !== channel.name && (
               <span className="ml-2 inline-block h-3 w-3 rounded-full bg-green-500"></span>
